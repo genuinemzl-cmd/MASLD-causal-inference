@@ -1,0 +1,65 @@
+# MASLD Causal Inference - Configuration Template
+# =============================================
+
+# Data file paths
+data:
+  # Phosphoproteomics data (main feature layer)
+  phospho_file: "data/public_datasets/phosphoproteomics.tsv"
+  # Proteomics data (covariate layer)
+  proteomics_file: "data/public_datasets/proteomics.tsv"
+  # Transcriptomics data (pre-screening filter layer)
+  transcriptomics_file: "data/public_datasets/transcriptomics.tsv"
+
+# Preprocessing parameters
+preprocessing:
+  # Minimum samples required for expression filtering
+  min_samples: 3
+  # Minimum intensity threshold
+  min_intensity: 10.0
+  # Correlation threshold for pseudo-causal site identification
+  pseudo_causal_correlation_threshold: 0.8
+  # FDR threshold for statistical significance
+  fdr_threshold: 0.05
+
+# Bayesian network parameters
+bayesian_network:
+  # Scoring method (bic, bdeu, k2)
+  scoring_method: "bic"
+  # Maximum iterations for Hill-Climbing
+  max_iter: 100000
+  # Number of bootstrap iterations for stability assessment
+  n_bootstrap: 200
+  # Minimum stability score to retain edge
+  stability_threshold: 0.7
+
+# DoWhy parameters
+dowhy:
+  # Outcome variable (disease phenotype or downstream signal)
+  outcome: "disease_status"
+  # Confounder variables (e.g., age, gender, batch)
+  confounders: []
+
+# Validation parameters
+validation:
+  # Ptprk-/- validation data file
+  ptprk_data_file: "data/ptprk_validation/ptprk_knockout.tsv"
+  # Minimum MCS score for high-confidence nodes
+  mcs_threshold: 2
+
+# Path to prior knowledge files
+prior_knowledge:
+  # DEPOD phosphatase-substrate database
+  depod_file: "data/prior_knowledge/depod_protein_substrates.xls"
+  # DEPOD PSKRs (kinase-phosphatase-substrate relationships)
+  pskrs_file: "data/prior_knowledge/depod_pskrs.xls"
+  # Reactome pathways
+  reactome_file: "data/prior_knowledge/reactome_pathways.tsv"
+  # PhosphoSitePlus kinase-substrate data
+  phosphositeplus_file: "data/prior_knowledge/phosphositeplus_kinase_substrate.txt"
+
+# Output settings
+output:
+  results_dir: "results"
+  logs_dir: "logs"
+  export_network: true
+  export_plots: true
